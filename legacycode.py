@@ -1,38 +1,53 @@
-import math
-import matplotlib.pyplot as mtp
-
-
-def funct(x, y):
+#derivative of function
+def derivative(x, y):
     return y/(1+x) - 0.5*y**2
 
-
+#computing y for third
 def third(x,y, h):
-    fi0 = h*funct(x,y)
-    fi1 = h*funct(x+0.1/2, y+fi0/2)
-    fi2 = h*funct(x+0.1, y-fi0+2*fi1)
+    fi0 = h*derivative(x,y)
+    fi1 = h*derivative(x+h/2, y+fi0/2)
+    fi2 = h*derivative(x+h, y-fi0+2*fi1)
     return y + 1/6*(fi0 + 4*fi1+ fi2)
 
 
+#computing y for forth
 def forth(x, y, h):
-    fi0 = h * funct(x, y)
-    fi1 = h * funct(x + 0.05, y + fi0 / 2)
-    fi2 = h * funct(x + 0.05, y + fi1/2)
-    fi3 = h * funct(x+0.1, y + fi2)
+    fi0 = h * derivative(x, y)
+    fi1 = h * derivative(x + h/2, y + fi0 / 2)
+    fi2 = h * derivative(x + h/2, y + fi1/2)
+    fi3 = h * derivative(x+h, y + fi2)
     return y + 1/6*(fi0 +2*fi1 + 2*fi2 + fi3)
 
 
-x =[0 ,]
-y3 = [1 ,]
-y4 = [1,]
 
-
-def thirdfordraw(range, countsteps):
-    h = round(range/countsteps,0)
+#input:
+#end - (float) end of range
+#countsteps - (int) count of steps
+#output [x,y]
+#x - (list of float)
+#y - (list of float)
+def thirdfordraw(end, countsteps):
+    x = [0, ]
+    y3 = [1, ]
+    h = round(end/countsteps,0)
     for i in range(countsteps):
         y3.append(third(x[i], y3[i], h))
         x.append(x[i]+h)
+    return (x,y3)
 
-#y4.append(forth(x[i], y4[i]))
-#print("Метод Рунге-Кутта 3 порядка {0}".format(round(y3[i+1],5)))
-#print("Метод Рунге-Кутта 4 порядка {0}".format(round(y4[i+1],5)))
+#input:
+#end - (float) end of range
+#countsteps - (int) count of steps
+#output [x,y]
+#x - (list of float)
+#y - (list of float)
+def forthfordraw(end, countsteps):
+    x = [0, ]
+    y4 = [1, ]
+    h = round(end / countsteps, 0)
+    for i in range(countsteps):
+        y4.append(forth(x[i], y4[i], h))
+        x.append(x[i] + h)
+    return (x, y4)
+
 
