@@ -1,6 +1,7 @@
 import matplotlib.pyplot as mtp
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 import legacycode
 
 class App(tk.Tk):
@@ -14,31 +15,27 @@ class App(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         def graph():
-            if nEntry.get() != '' and endEntry.get() != '':
+            try:
                 n = int(nEntry.get())
                 end = int(endEntry.get())
-                fn = type.get()
-                f = fn[0]
-                if f == "0":
-                    x,y = legacycode.thirdfordraw(end,n)
+                f = type.get()
+                if f[0] == "0":
+                    x, y = legacycode.thirdfordraw(end, n)
                     leg1 = mtp.plot(x, y)
-                    mtp.legend(leg1,"Метод Рунге-Кутта 3 порядка")
-                    mtp.grid()
-                    mtp.show()
-
-                if f == "1":
-                    x, y = legacycode.forthfordraw(end,n)
+                    mtp.legend(leg1, "Метод Рунге-Кутта 3 порядка")
+                if f[0] == "1":
+                    x, y = legacycode.forthfordraw(end, n)
                     leg1 = mtp.plot(x, y)
-                    mtp.legend(leg1,"Метод Рунге-Кутта 4 порядка")
-                    mtp.grid()
-                    mtp.show()
-                if f == "2":
-                    x, y = legacycode.thirdfordraw(end,n)
-                    x1, y1 = legacycode.forthfordraw(end,n)
-                    leg1,leg2 = mtp.plot(x, y, x, y1)
-                    mtp.legend((leg1,leg2),("Метод Рунге-Кутта 3 порядка","Метод Рунге-Кутта 4 порядка"))
-                    mtp.grid()
-                    mtp.show()
+                    mtp.legend(leg1, "Метод Рунге-Кутта 4 порядка")
+                if f[0] == "2":
+                    x, y = legacycode.thirdfordraw(end, n)
+                    x1, y1 = legacycode.forthfordraw(end, n)
+                    leg1, leg2 = mtp.plot(x, y, x, y1)
+                    mtp.legend((leg1, leg2), ("Метод Рунге-Кутта 3 порядка", "Метод Рунге-Кутта 4 порядка"))
+                mtp.grid()
+                mtp.show()
+            except ValueError:
+                tk.messagebox.showerror("Error", "Not valid argument")
 
         tk.Label(self, text = "N = ").grid(row=1)
         nEntry = tk.Entry(self, width=20)
@@ -56,7 +53,6 @@ class App(tk.Tk):
         fspis.grid(row=1,column=3)
         btn = ttk.Button(self, text="Graph", command=graph)
         btn.grid(row=1,column=4)
-
 
 app = App()
 app.mainloop()
