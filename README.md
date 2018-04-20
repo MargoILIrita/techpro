@@ -12,7 +12,11 @@ pip install git+https://github.com/MargoILIrita/techpro.git@master
 
 ## Usage
 
+![Пример работы](https://raw.githubusercontent.com/MargoILIrita/techpro/master/images/Runge%E2%80%93Kutta%20methods.png)
 
+![Масштабирование](https://raw.githubusercontent.com/MargoILIrita/techpro/master/images/approximation%20graph.png)
+
+![Ошибка](https://github.com/MargoILIrita/techpro/blob/master/images/Error.png)
 
 ## Contribute
 
