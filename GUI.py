@@ -1,19 +1,20 @@
-import matplotlib
-matplotlib.use("TkAgg")
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
-from matplotlib.figure import Figure
-
+import matplotlib.pyplot as mtp
 import numpy as np
 import pylab
 
 import tkinter as tk
 from tkinter import ttk
-#import legacycode
+import legacycode
 
 LARGE_FONT = ("Verdana", 12)
+global n
+n = 0
+global x
+global y
+x = 0
+y = 0
 
-
-class SeaofBTCapp(tk.Tk):
+class App(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
@@ -24,59 +25,47 @@ class SeaofBTCapp(tk.Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        self.frames = {}
+        def graph():
+            n = int(nEntry.get())
+            if n != 0:
+                print(n)
+            fn = type.get()
+            f = fn[0]
+            if f == "0":
+                x,y = legacycode.thirdfordraw(n,n)
+                leg1 = mtp.plot(x, y)
+                mtp.legend(leg1,"Метод Рунге-Кутта 3 порядка")
+                mtp.grid()
+                mtp.show()
 
-        for F in (StartPage, Graph):
-            frame = F(container, self)
-
-            self.frames[F] = frame
-
-            frame.grid(row=0, column=0, sticky="nsew")
-
-        self.show_frame(StartPage)
-
-    def show_frame(self, cont):
-        frame = self.frames[cont]
-        frame.tkraise()
-
-
-class StartPage(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-
-        tk.Label(self, text="Start Page", font=LARGE_FONT).pack(pady=10, padx=10)
-        ttk.Button(self, text="Graph", command=lambda: controller.show_frame(Graph)).pack()
-        tk.Radiobutton(self, text="GraphRK3", value = 1).pack()
-        tk.Radiobutton(self, text="GraphRK4", value = 2).pack()
-        tk.Radiobutton(self, text="GraphAll", value = 3).pack()
-        nEntery = tk.Entry(self, text = "Enter you N", width = 20).pack()
-        nEntery.get()
-        n = int(nEntery)
+            if f == "1":
+                x, y = legacycode.forthfordraw(n, n)
+                leg1 = mtp.plot(x, y)
+                mtp.legend(leg1,"Метод Рунге-Кутта 4 порядка")
+                mtp.grid()
+                mtp.show()
+            if f == "2":
+                x, y = legacycode.thirdfordraw(n, n)
+                x1, y1 = legacycode.forthfordraw(n, n)
+                leg1,leg2 = mtp.plot(x, y, x, y1)
+                mtp.legend((leg1,leg2),("Метод Рунге-Кутта 3 порядка","Метод Рунге-Кутта 4 порядка"))
+                mtp.grid()
+                mtp.show()
 
 
-class Graph(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Graph Page!", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
-
-        button1 = ttk.Button(self, text="Back to Home",
-                             command=lambda: controller.show_frame(StartPage))
-        button1.pack()
-        x = np.arange(-10,11, 1)
-        y = x
-        f = Figure(figsize=(5, 5), dpi=100)
-        a = f.add_subplot(111)
-        a.plot(x,y)
-
-        canvas = FigureCanvasTkAgg(f, self)
-        canvas.show()
-        canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
-
-        toolbar = NavigationToolbar2TkAgg(canvas, self)
-        toolbar.update()
-        canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+        nEntry = tk.Entry(self, width=20)
+        nEntry.pack(side=tk.LEFT)
+        #
+        type = tk.StringVar()
+        type.set('0 Метод Рунге-Кутта 3 порядка')
+        fspis=tk.OptionMenu(self, type,
+                '0 Метод Рунге-Кутта 3 порядка',
+                '1 Метод Рунге-Кутта 4 порядка',
+                '2 Оба графика')
+        fspis.pack({"side": "left"})
+        btn = ttk.Button(self, text="Graph", command=graph)
+        btn.pack(side=tk.LEFT)
 
 
-app = SeaofBTCapp()
+app = App()
 app.mainloop()
