@@ -5,14 +5,21 @@ _y' = y/(1+x) - 0.5*y^2_
 
 _y(0) = 1_
 
-
 ## Install
 
+Open cmd
+
+```
 pip install git+https://github.com/MargoILIrita/techpro.git@master
+```
 
 ## Usage
 
+Open cmd
 
+```
+python {filepath}GUI.py
+```
 
 ## Contribute
 
