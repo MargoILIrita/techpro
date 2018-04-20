@@ -57,6 +57,6 @@ class App(tk.Tk):
         btn = ttk.Button(self, text="Graph", command=graph)
         btn.grid(row=1,column=4)
 
-
-app = App()
-app.mainloop()
+if __name__ == '__main__':
+    app = App()
+    app.mainloop()

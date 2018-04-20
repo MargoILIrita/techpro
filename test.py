@@ -10,6 +10,5 @@ class MyTestCase(unittest.TestCase):
         self.assertNotEqual(l.derivative(0,0),1)
 
 
-
 if __name__ == '__main__':
     unittest.main()
