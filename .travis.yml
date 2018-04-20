@@ -1,6 +1,9 @@
 language: python
 python:
   - "3.6"
+install:
+- pip install pyinstaller
+- pyinstaller GUI.py
 script: python test.py
 notifications:
   webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
