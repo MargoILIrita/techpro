@@ -1,7 +1,8 @@
 language: python
 python:
   - "3.6"
-cache: pip
+cache: pip3
 install:
-  - pip install tkinter
-script: python test.py
+  - pip3 install tkinter
+script: python test.pynotifications:
+webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
