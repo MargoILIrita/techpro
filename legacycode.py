@@ -1,5 +1,7 @@
 #derivative of function
 def derivative(x, y):
+    if x == -1 :
+        raise ValueError("Function doesn't exist")
     return y/(1+x) - 0.5*y**2
 
 #computing y for third

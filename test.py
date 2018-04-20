@@ -6,6 +6,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(l.derivative(0,0), 0)
         self.assertEqual(l.derivative(2,3), -3.5)
         self.assertNotEqual(l.derivative(0,0),1)
+        self.assertRaises(ValueError,l.derivative,-1,1)
 
 
     def test_third(self):
