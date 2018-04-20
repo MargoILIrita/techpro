@@ -2,6 +2,8 @@ import matplotlib.pyplot as mtp
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg,NavigationToolbar2TkAgg
+from matplotlib.figure import Figure
 import legacycode
 
 class App(tk.Tk):
@@ -14,6 +16,15 @@ class App(tk.Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
+        self.f = Figure(figsize=(5, 5), dpi=100)
+        self.canvas = FigureCanvasTkAgg(self.f, self)
+        self.canvas.get_tk_widget().grid(row=3, column=1, columnspan=4)
+        toolbar_frame = tk.Frame()
+        toolbar_frame.grid(row=4, column=1, columnspan=4)
+        toolbar = NavigationToolbar2TkAgg(self.canvas, toolbar_frame)
+        toolbar.update()
+        self.fig = self.f.add_subplot(111)
+        self.fig.grid()
         def graph():
             try:
                 n = int(nEntry.get())
@@ -21,29 +32,27 @@ class App(tk.Tk):
                 f = type.get()
                 if f[0] == "0":
                     x, y = legacycode.thirdfordraw(end, n)
-                    leg1 = mtp.plot(x, y)
-                    mtp.legend(leg1, "Метод Рунге-Кутта 3 порядка")
+                    leg1 = self.fig.plot(x, y, color="r")
+                    self.fig.legend(leg1, "Метод Рунге-Кутта 3 порядка")
                 if f[0] == "1":
                     x, y = legacycode.forthfordraw(end, n)
-                    leg1 = mtp.plot(x, y)
-                    mtp.legend(leg1, "Метод Рунге-Кутта 4 порядка")
+                    leg1 = self.fig.plot(x, y, color="b")
+                    self.fig.legend(leg1, "Метод Рунге-Кутта 4 порядка")
                 if f[0] == "2":
                     x, y = legacycode.thirdfordraw(end, n)
                     x1, y1 = legacycode.forthfordraw(end, n)
-                    leg1, leg2 = mtp.plot(x, y, x, y1)
-                    mtp.legend((leg1, leg2), ("Метод Рунге-Кутта 3 порядка", "Метод Рунге-Кутта 4 порядка"))
-                mtp.grid()
-                mtp.show()
+                    leg1, leg2 = self.fig.plot(x, y, x, y1)
+                    self.fig.legend((leg1, leg2), ("Метод Рунге-Кутта 3 порядка", "Метод Рунге-Кутта 4 порядка"))
+                self.canvas.show()
             except ValueError:
                 tk.messagebox.showerror("Error", "Not valid argument")
 
-        tk.Label(self, text = "N = ").grid(row=1)
+        tk.Label(self, text = "N = ").grid(row=1, column=1)
         nEntry = tk.Entry(self, width=20)
-        nEntry.grid(row=1,column=1)
-        tk.Label(self, text="End = ").grid(row=2)
+        nEntry.grid(row=1,column=2)
+        tk.Label(self, text="End = ").grid(row=2, column=1)
         endEntry = tk.Entry(self, width=20)
-        endEntry.grid(row=2,column=1)
-        #
+        endEntry.grid(row=2,column=2)
         type = tk.StringVar()
         type.set('0 Метод Рунге-Кутта 3 порядка')
         fspis=tk.OptionMenu(self, type,
