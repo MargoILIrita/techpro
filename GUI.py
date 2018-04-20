@@ -23,26 +23,27 @@ class App(tk.Tk):
         toolbar_frame.grid(row=4, column=1, columnspan=4)
         toolbar = NavigationToolbar2TkAgg(self.canvas, toolbar_frame)
         toolbar.update()
-        self.fig = self.f.add_subplot(111)
-        self.fig.grid()
         def graph():
             try:
                 n = int(nEntry.get())
                 end = int(endEntry.get())
-                f = type.get()
-                if f[0] == "0":
+                func = type.get()
+                self.f.clear()
+                fig = self.f.add_subplot(111)
+                if func[0] == "0":
                     x, y = legacycode.thirdfordraw(end, n)
-                    leg1 = self.fig.plot(x, y, color="r")
-                    self.fig.legend(leg1, "Метод Рунге-Кутта 3 порядка")
-                if f[0] == "1":
+                    leg1 = fig.plot(x, y, color="r")
+                    fig.legend(leg1, "Метод Рунге-Кутта 3 порядка")
+                if func[0] == "1":
                     x, y = legacycode.forthfordraw(end, n)
-                    leg1 = self.fig.plot(x, y, color="b")
-                    self.fig.legend(leg1, "Метод Рунге-Кутта 4 порядка")
-                if f[0] == "2":
+                    leg1 = fig.plot(x, y, color="b")
+                    fig.legend(leg1, "Метод Рунге-Кутта 4 порядка")
+                if func[0] == "2":
                     x, y = legacycode.thirdfordraw(end, n)
                     x1, y1 = legacycode.forthfordraw(end, n)
-                    leg1, leg2 = self.fig.plot(x, y, x, y1)
-                    self.fig.legend((leg1, leg2), ("Метод Рунге-Кутта 3 порядка", "Метод Рунге-Кутта 4 порядка"))
+                    leg1, leg2 = fig.plot(x, y, x, y1)
+                    fig.legend((leg1, leg2), ("Метод Рунге-Кутта 3 порядка", "Метод Рунге-Кутта 4 порядка"))
+                fig.grid(True)
                 self.canvas.show()
             except ValueError:
                 tk.messagebox.showerror("Error", "Not valid argument")
