@@ -11,7 +11,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_third(self):
         self.assertEqual(l.third(0,0,1), 0)
-        self.assertEqual(l.third(10,10, 0.1), 7.152476877619735)
+        self.assertEqual(l.third(10,10, 0.1), 6.614712695731808)
         self.assertNotEqual(l.third(0,0,1),2)
 
 
