@@ -1,5 +1,6 @@
 language: python
 python:
   - "3.6"
-script: python test.pynotifications:
-webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
+script: python test.py
+notifications:
+  webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
